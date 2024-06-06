@@ -56,7 +56,8 @@ def schedule_extract_transform() -> None:
         """
         df = pd.read_json(ti.xcom_pull(key="data_without_null"))
         df["at"] = pd.to_datetime(df["at"])
-        df = df.sort_values(by="at").to_json(date_format='iso')
+        df = df.sort_values(by="at")
+        df["at"]= df["at"].apply(lambda x: datetime.datetime.fromisoformat(x).timestamp()).to_json()
         ti.xcom_push(key="sorted_data", value=df)
     
     @task(outlets=[DATASET])

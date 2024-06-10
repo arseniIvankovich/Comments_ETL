@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-FILEPATH = os.getenv("FILEPATH")
+FILEPATH = os.getenv("FILEPATH", "not found")
 DATASET = Dataset(FILEPATH)
 
 with DAG(
